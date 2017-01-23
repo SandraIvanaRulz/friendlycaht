@@ -15,21 +15,25 @@
  */
 package com.google.firebase.codelab.friendlychat;
 
-import android.util.Log;
 
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageView;
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
+public class RentACarActivity extends AppCompatActivity  {
+        private ImageView mImageView;
 
-    private static final String TAG = "MyFMService";
 
-    @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        // Handle data payload of FCM messages.
-        Log.d(TAG, "FCM Message Id: " + remoteMessage.getMessageId());
-        Log.d(TAG, "FCM Notification Message: " +
-                remoteMessage.getNotification());
-        Log.d(TAG, "FCM Data Message: " + remoteMessage.getData());
-    }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.guest_rantacar);
+                mImageView = (ImageView) findViewById(R.id.imageViewId);
+                mImageView.setImageResource(R.drawable.rentacar);
+
+        }
+
+
 }

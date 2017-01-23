@@ -40,48 +40,33 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.appinvite.AppInvite;
-import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity
+public class AdminActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener {
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         public TextView messageTextView;
         public TextView messengerTextView;
         public CircleImageView messengerImageView;
-        public Button messengerAcceptButtonView;
 
         public MessageViewHolder(View v) {
             super(v);
             messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
             messengerTextView = (TextView) itemView.findViewById(R.id.messengerTextView);
             messengerImageView = (CircleImageView) itemView.findViewById(R.id.messengerImageView);
-            messengerAcceptButtonView = (Button) itemView.findViewById(R.id.acceptButton);
         }
     }
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "AdminActivity";
     public static final String MESSAGES_CHILD = "messages";
     private static final int REQUEST_INVITE = 1;
     public static final int DEFAULT_MSG_LENGTH_LIMIT = 10;
@@ -118,16 +103,15 @@ public class MainActivity extends AppCompatActivity
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-
+        Log.d(TAG, "The user *****" + mFirebaseUser.getDisplayName());
         if (mFirebaseUser == null) {
             // Not signed in, launch the Sign In activity
             startActivity(new Intent(this, SignInActivity.class));
             finish();
             return;
         }  if (mFirebaseUser.getDisplayName().equalsIgnoreCase("Ivana Nizamovska")) {
-            // Guest signed in, launch the Guest activity
-            Log.d(TAG, "I am here" + mFirebaseUser.getDisplayName());
-            startActivity(new Intent(this, GuestActivity.class));
+            // Not signed in, launch the Sign In activity
+            startActivity(new Intent(this, SignInActivity.class));
             finish();
             return;
         }
@@ -153,11 +137,6 @@ public class MainActivity extends AppCompatActivity
         // New child entries
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
-        // Start the background Firebase activity
-        Intent intent = new Intent(FirebaseBackgroundService.class.getName());
-        intent.setPackage(this.getPackageName());
-        this.startService(intent);
-
         Log.d(TAG, "Database reference instance " + mFirebaseDatabaseReference);
 
         mFirebaseAdapter = new FirebaseRecyclerAdapter<FriendlyMessage,
@@ -179,10 +158,10 @@ public class MainActivity extends AppCompatActivity
                 if (friendlyMessage.getPhotoUrl() == null) {
                     viewHolder.messengerImageView
                             .setImageDrawable(ContextCompat
-                                    .getDrawable(MainActivity.this,
+                                    .getDrawable(AdminActivity.this,
                                             R.drawable.ic_account_circle_black_36dp));
                 } else {
-                    Glide.with(MainActivity.this)
+                    Glide.with(AdminActivity.this)
                             .load(friendlyMessage.getPhotoUrl())
                             .into(viewHolder.messengerImageView);
                 }
