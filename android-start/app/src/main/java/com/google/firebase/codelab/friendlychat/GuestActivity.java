@@ -74,42 +74,35 @@ public class GuestActivity extends AppCompatActivity implements
 
             case R.id.taxi:
                 startActivity(new Intent(this, TaxiActivity.class));
-                finish();
                 return;
             case R.id.wakeupcall:
                 startActivity(new Intent(this, WakeUpCallActivity.class));
-                finish();
                 return;
             case R.id.rentabike:
                 startActivity(new Intent(this, RentABikeActivity.class));
-                finish();
                 return;
             case R.id.rentacar:
                 startActivity(new Intent(this, RentACarActivity.class));
-                finish();
                 return;
             case R.id.transfer:
                 startActivity(new Intent(this, TransferActivity.class));
-                finish();
                 return;
 
-//            case R.id.laundry:
-//                startActivity(new Intent(this, LaundryActivity.class));
-//                finish();
-//                return;
-//
-//            case R.id.breakfast:
-//                // do your code
-//                break;
-//
-//            case R.id.cityguide:
-//                // do your code
-//                break;
+            case R.id.drycleaning:
+                startActivity(new Intent(this, LaundryActivity.class));
+                return;
+
+            case R.id.foodmenu:
+                startActivity(new Intent(this, LaundryActivity.class));
+                return;
+
+            case R.id.business:
+                startActivity(new Intent(this, BusinessActivity.class));
+                return;
 
             default:
                 break;
         }
-
 
     }
 

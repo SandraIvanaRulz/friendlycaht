@@ -39,7 +39,7 @@ import java.util.Calendar;
 public class WakeUpCallActivity extends AppCompatActivity implements
         View.OnClickListener {
 
-    Button btnDatePicker = (Button) findViewById(R.id.btn_date), btnTimePicker;
+    Button btnDatePicker, btnTimePicker;
     EditText txtDate, txtTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private Button mSendWakeUpButton;
@@ -66,9 +66,10 @@ public class WakeUpCallActivity extends AppCompatActivity implements
         mPhotoUrl = mFirebaseAuth.getCurrentUser().getPhotoUrl().toString();
 
 
-        btnTimePicker = (Button) findViewById(R.id.btn_time);
-        txtDate = (EditText) findViewById(R.id.in_date);
-        txtTime = (EditText) findViewById(R.id.in_time);
+        btnDatePicker=(Button)findViewById(R.id.btn_date);
+        btnTimePicker=(Button)findViewById(R.id.btn_time);
+        txtDate=(EditText)findViewById(R.id.in_date);
+        txtTime=(EditText)findViewById(R.id.in_time);
 
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);

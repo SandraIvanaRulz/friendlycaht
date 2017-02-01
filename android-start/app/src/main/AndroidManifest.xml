@@ -24,6 +24,8 @@
         <activity android:name=".RentABikeActivity" />
         <activity android:name=".RentACarActivity" />
         <activity android:name=".TransferActivity" />
+        <activity android:name=".LaundryActivity" />
+        <activity android:name=".BusinessActivity" />
 
 
 

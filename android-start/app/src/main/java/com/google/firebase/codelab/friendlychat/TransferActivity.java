@@ -56,7 +56,9 @@ public class TransferActivity extends AppCompatActivity implements
         private FirebaseAuth mFirebaseAuth;
         private static final String TAG = "TransferActivity";
         private TextView notificationText;
-        Spinner s1,s2;
+        Spinner country,city;
+        private RadioGroup radioGroup;
+        private RadioButton radioButton;
 
 
         @Override
@@ -70,9 +72,10 @@ protected void onCreate(Bundle savedInstanceState) {
             onRadioButtonClicked((Button)findViewById(R.id.radio_car));
             onRadioButtonClicked((Button)findViewById(R.id.radio_van));
 
-            s1 = (Spinner)findViewById(R.id.spinner1);
-            s2 = (Spinner)findViewById(R.id.spinner2);
-            s1.setOnItemSelectedListener(this);
+            country = (Spinner)findViewById(R.id.spinner_country);
+            city = (Spinner)findViewById(R.id.spinner_city);
+
+            country.setOnItemSelectedListener(this);
 
 
         btnDatePicker=(Button)findViewById(R.id.btn_date);
@@ -82,17 +85,25 @@ protected void onCreate(Bundle savedInstanceState) {
 
         btnDatePicker.setOnClickListener(this);
         btnTimePicker.setOnClickListener(this);
+        radioGroup = (RadioGroup) findViewById(R.id.radio);
 
         mSendTransferButton = (Button) findViewById(R.id.sendTransferButton);
 
         mSendTransferButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // get selected radio button from radioGroup
+                    int selectedId = radioGroup.getCheckedRadioButtonId();
+
+                    // find the radiobutton by returned id
+                    radioButton = (RadioButton) findViewById(selectedId);
+
                         // Send messages on click.
                         String theMsg = "Transfer ".concat(txtDate.getText().toString()).concat("  ").
                                 concat(txtTime.getText().toString()).
-                                concat("Vehicle: ").
-                                concat("Destination: ");
+                                concat("Vehicle: ").concat(radioButton.getText().toString()).concat("  ").
+                                concat("Destination: ").concat(country.getSelectedItem().toString()).concat("  ").
+                                concat("  ").concat(city.getSelectedItem().toString());
                         FriendlyMessage friendlyMessage = new
                                 FriendlyMessage(theMsg,
                                 mUsername,
@@ -178,8 +189,8 @@ public void onTimeSet(TimePicker view, int hourOfDay,
     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
                                long arg3) {
         // TODO Auto-generated method stub
-        String sp1= String.valueOf(s1.getSelectedItem());
-        String sp2= String.valueOf(s2.getSelectedItem());
+        String sp1= String.valueOf(country.getSelectedItem());
+        String sp2= String.valueOf(city.getSelectedItem());
         Toast.makeText(this, sp2, Toast.LENGTH_SHORT).show();
         if(sp1.contentEquals("Macedonia")) {
             List<String> list = new ArrayList<String>();
@@ -228,7 +239,7 @@ public void onTimeSet(TimePicker view, int hourOfDay,
                     android.R.layout.simple_spinner_item, list);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter);
+            city.setAdapter(dataAdapter);
         }
         if(sp1.contentEquals("Albania")) {
             List<String> list = new ArrayList<String>();
@@ -237,7 +248,7 @@ public void onTimeSet(TimePicker view, int hourOfDay,
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            city.setAdapter(dataAdapter2);
         }
         if(sp1.contentEquals("Greece")) {
             List<String> list = new ArrayList<String>();
@@ -247,7 +258,7 @@ public void onTimeSet(TimePicker view, int hourOfDay,
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            city.setAdapter(dataAdapter2);
         }
         if(sp1.contentEquals("Serbia")) {
             List<String> list = new ArrayList<String>();
@@ -256,7 +267,7 @@ public void onTimeSet(TimePicker view, int hourOfDay,
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            city.setAdapter(dataAdapter2);
         }
         if(sp1.contentEquals("Bosnia")) {
             List<String> list = new ArrayList<String>();
@@ -265,7 +276,7 @@ public void onTimeSet(TimePicker view, int hourOfDay,
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            city.setAdapter(dataAdapter2);
         }
 
         if(sp1.contentEquals("Bulgaria")) {
@@ -275,7 +286,7 @@ public void onTimeSet(TimePicker view, int hourOfDay,
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            city.setAdapter(dataAdapter2);
         }
         if(sp1.contentEquals("Kosovo")) {
             List<String> list = new ArrayList<String>();
@@ -284,7 +295,7 @@ public void onTimeSet(TimePicker view, int hourOfDay,
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            city.setAdapter(dataAdapter2);
         }
 
     }

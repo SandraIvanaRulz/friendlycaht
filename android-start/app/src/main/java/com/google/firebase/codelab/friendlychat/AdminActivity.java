@@ -32,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -56,6 +57,8 @@ public class AdminActivity extends AppCompatActivity
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         public TextView messageTextView;
         public TextView messengerTextView;
+        public Button acceptButton;
+        public Button declineButton;
         public CircleImageView messengerImageView;
 
         public MessageViewHolder(View v) {
@@ -63,6 +66,8 @@ public class AdminActivity extends AppCompatActivity
             messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
             messengerTextView = (TextView) itemView.findViewById(R.id.messengerTextView);
             messengerImageView = (CircleImageView) itemView.findViewById(R.id.messengerImageView);
+            acceptButton = (Button) itemView.findViewById(R.id.acceptButton);
+            declineButton = (Button) itemView.findViewById(R.id.declineButton);
         }
     }
 
@@ -82,6 +87,7 @@ public class AdminActivity extends AppCompatActivity
     private LinearLayoutManager mLinearLayoutManager;
     private ProgressBar mProgressBar;
     private EditText mMessageEditText;
+    private ViewGroup mSendCustomMessageLayout;
 
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
@@ -147,7 +153,7 @@ public class AdminActivity extends AppCompatActivity
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD)) {
 
             @Override
-            protected void populateViewHolder(MessageViewHolder viewHolder,
+            protected void populateViewHolder(final MessageViewHolder viewHolder,
                                               FriendlyMessage friendlyMessage, int position) {
 
                 Log.d(TAG, "populateViewHolder !!!!");
@@ -155,6 +161,26 @@ public class AdminActivity extends AppCompatActivity
                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                 viewHolder.messageTextView.setText(friendlyMessage.getText());
                 viewHolder.messengerTextView.setText(friendlyMessage.getName());
+
+                Log.d(TAG, "button accept instance " + viewHolder.acceptButton);
+                Log.d(TAG, "button decline instance " + viewHolder.declineButton);
+
+                viewHolder.acceptButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d(TAG, "accept clicked!!!");
+
+                    }
+                });
+
+                viewHolder.declineButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d(TAG, "decline clicked!!!");
+                        mSendCustomMessageLayout.setVisibility(View.VISIBLE);
+                    }
+                });
+
                 if (friendlyMessage.getPhotoUrl() == null) {
                     viewHolder.messengerImageView
                             .setImageDrawable(ContextCompat
@@ -166,6 +192,8 @@ public class AdminActivity extends AppCompatActivity
                             .into(viewHolder.messengerImageView);
                 }
             }
+
+
         };
 
         mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -188,6 +216,7 @@ public class AdminActivity extends AppCompatActivity
 
         mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
         mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+        mSendCustomMessageLayout = (ViewGroup) findViewById(R.id.sendCustomMessageLayout);
 
         mMessageEditText = (EditText) findViewById(R.id.messageEditText);
         mMessageEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mSharedPreferences
@@ -216,6 +245,10 @@ public class AdminActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 // Send messages on click.
+
+                mSendCustomMessageLayout.setVisibility(View.GONE);
+
+
                 FriendlyMessage friendlyMessage = new
                         FriendlyMessage(mMessageEditText.getText().toString(),
                         mUsername,

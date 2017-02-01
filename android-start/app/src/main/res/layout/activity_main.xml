@@ -14,15 +14,16 @@
         android:id="@+id/messageRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout"/>
+        android:layout_above="@+id/sendCustomMessageLayout"/>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/sendCustomMessageLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <EditText

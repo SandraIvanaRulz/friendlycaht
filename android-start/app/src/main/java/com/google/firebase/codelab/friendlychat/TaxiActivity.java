@@ -43,7 +43,7 @@ public class TaxiActivity extends AppCompatActivity implements
 
         Button btnDatePicker, btnTimePicker;
         EditText txtDate, txtTime;
-private int mYear, mMonth, mDay, mHour, mMinute;
+        private int mYear, mMonth, mDay, mHour, mMinute;
         private Button mSendTaxiButton;
         private DatabaseReference mFirebaseDatabaseReference;
         public static final String MESSAGES_CHILD = "messages";

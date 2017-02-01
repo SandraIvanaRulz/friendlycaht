@@ -132,10 +132,9 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         else {
-            mUsername = mFirebaseUser.getDisplayName();
-            if (mFirebaseUser.getPhotoUrl() != null) {
-                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
-            }
+            Log.d(TAG, "I am here" + mFirebaseUser.getDisplayName());
+            startActivity(new Intent(this, AdminActivity.class));
+            finish();
         }
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
