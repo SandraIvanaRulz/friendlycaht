@@ -99,6 +99,12 @@ public class GuestActivity extends AppCompatActivity implements
             case R.id.business:
                 startActivity(new Intent(this, BusinessActivity.class));
                 return;
+            case R.id.pillow:
+                startActivity(new Intent(this, BusinessActivity.class));
+                return;
+            case R.id.roomservice:
+                startActivity(new Intent(this, BusinessActivity.class));
+                return;
 
             default:
                 break;
