@@ -26,6 +26,7 @@
         <activity android:name=".TransferActivity" />
         <activity android:name=".LaundryActivity" />
         <activity android:name=".BusinessActivity" />
+        <activity android:name=".PillowActivity" />
 
 
 
